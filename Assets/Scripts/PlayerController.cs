@@ -19,9 +19,9 @@ public class PlayerController : MonoBehaviour, IKitchenObjectParent
     [SerializeField] private LayerMask countersLayerMask;
     [SerializeField] private Transform kitchenObjectHoldPoint;
 
+    private Vector3 moveDir;
     private Vector3 lastInteractDir;
     private bool isWalking;
-    private Vector3 moveDir;
     private BaseCounter selectedCounter;
     private KitchenObject kitchenObject;
     
@@ -99,6 +99,7 @@ public class PlayerController : MonoBehaviour, IKitchenObjectParent
         Vector2 inputVector = gameInput.GetMovementVectorNormalized();
         
         moveDir = new Vector3(inputVector.x,0,inputVector.y);
+
         
         float moveDistance = Time.deltaTime * moveSpeed;
         float playerRadius = 0.7f;
@@ -143,8 +144,8 @@ public class PlayerController : MonoBehaviour, IKitchenObjectParent
 
         isWalking = moveDir != Vector3.zero;
 
-        float speedRotation = 10.0f;
-        transform.forward = Vector3.Slerp(transform.forward,moveDir,speedRotation*Time.deltaTime);
+        float speedRotation = 8.0f;
+        transform.forward = Vector3.Slerp(transform.forward,lastInteractDir,speedRotation*Time.deltaTime);
     }
 
     public bool IsWalking()

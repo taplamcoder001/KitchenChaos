@@ -70,7 +70,7 @@ public class PlayerController : MonoBehaviour, IKitchenObjectParent
 
         if(moveDir!=Vector3.zero)
         {
-            lastInteractDir = moveDir;
+            lastInteractDir = transform.forward;
         }
 
         float interactDistance = 2f;
@@ -145,7 +145,9 @@ public class PlayerController : MonoBehaviour, IKitchenObjectParent
         isWalking = moveDir != Vector3.zero;
 
         float speedRotation = 8.0f;
-        transform.forward = Vector3.Slerp(transform.forward,lastInteractDir,speedRotation*Time.deltaTime);
+        isWalking = moveDir != Vector3.zero;
+        transform.forward = Vector3.Slerp(transform.forward,moveDir,speedRotation*Time.deltaTime);
+        // transform.forward = Vector3.Slerp(transform.forward,lastInteractDir,speedRotation*Time.deltaTime);
     }
 
     public bool IsWalking()

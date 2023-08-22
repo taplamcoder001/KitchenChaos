@@ -20,8 +20,8 @@ public class SoundManager : MonoBehaviour
     }
 
     private void Start() {
-        DeliveryManager.Instance.OnSoundSuccess += DeliveryManager_OnSoundSuccess;
-        DeliveryManager.Instance.OnSoundFail += DeliveryManager_OnSoundFail;
+        DeliveryManager.Instance.OnRecipeCompleted += DeliveryManager_OnRecipeCompleted;
+        DeliveryManager.Instance.OnRecipeFailed += DeliveryManager_OnRecipeFailed;
         PlayerController.Instance.OnPickedSomething += Player_OnPickedSomething;
         BaseCounter.OnAnyObjectPlacedHere += BaseCounter_OnAnyObjectPlacedHere;
         CuttingCounter.OnAnyCut += CuttingCounter_OnAnyCut;
@@ -51,12 +51,12 @@ public class SoundManager : MonoBehaviour
         PlaySound(audioClipRefsSO.objectPickup,PlayerController.Instance.transform.position);
     }
 
-    private void DeliveryManager_OnSoundSuccess(object sender, System.EventArgs e)
+    private void DeliveryManager_OnRecipeCompleted(object sender, System.EventArgs e)
     {
         PlaySound(audioClipRefsSO.deliverySuccess,DeliveryCounter.Instance.transform.position);
     }
 
-    private void DeliveryManager_OnSoundFail(object sender,System.EventArgs e)
+    private void DeliveryManager_OnRecipeFailed(object sender,System.EventArgs e)
     {
         PlaySound(audioClipRefsSO.deliveryFail,DeliveryCounter.Instance.transform.position);
     }
@@ -74,6 +74,16 @@ public class SoundManager : MonoBehaviour
     public void PlayfootstepSound(Vector3 position,float volume = 1f)
     {
         PlaySound(audioClipRefsSO.footstep,position,volume);
+    }
+
+    public void PlayBurnWarningSound(Vector3 position)
+    {
+        PlaySound(audioClipRefsSO.warning,position);
+    }
+
+    public void PlayCountdownSound()
+    {
+        PlaySound(audioClipRefsSO.warning,Vector3.zero);
     }
 
     public void ChangeVolume(){

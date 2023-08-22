@@ -200,4 +200,9 @@ public class StoveCounter : BaseCounter,IHasProgress
         return null;
     }
 
+    public bool GetStateFryed()
+    {
+        return state == State.Fryed;
+    }
+
 }

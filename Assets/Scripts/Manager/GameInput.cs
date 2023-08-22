@@ -13,7 +13,7 @@ public class GameInput : MonoBehaviour
     public event EventHandler OnInteractAction;
     public event EventHandler OnInteractActionAlternate;
     public event EventHandler OnPauseAction;
-
+    public event EventHandler OnBindingRebind;
 
     [SerializeField] private PlayerInputAction playerInputAction;
     
@@ -139,6 +139,8 @@ public class GameInput : MonoBehaviour
 
                 PlayerPrefs.SetString(PLAYER_PREFS_BINDINGS_KEY,playerInputAction.SaveBindingOverridesAsJson());
                 PlayerPrefs.Save();
+
+                OnBindingRebind?.Invoke(this,EventArgs.Empty);
 
             })
             .Start();

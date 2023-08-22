@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class DeliveryManager : MonoBehaviour
 {
-    public event EventHandler OnSoundSuccess;
-    public event EventHandler OnSoundFail;
+    public event EventHandler OnRecipeSuccess;
+    public event EventHandler OnRecipeFailed;
     public event EventHandler OnRecipeSpawned;
     public event EventHandler OnRecipeCompleted;
 
@@ -14,7 +14,7 @@ public class DeliveryManager : MonoBehaviour
     [SerializeField] private RecipeListSO recipeListSO;
     private List<RecipeSO> waitingRecipeSOList;
 
-    private float spawnReciprTimer;
+    private float spawnRecipeTimer;
     private float spawnReciprTimerMax = 4f;
     private int waitingRecipesMax = 4;
     private int successFullRecipeAmount;
@@ -26,11 +26,11 @@ public class DeliveryManager : MonoBehaviour
         waitingRecipeSOList = new List<RecipeSO>();
     }
     private void Update() {
-        spawnReciprTimer -= Time.deltaTime;
-        if(spawnReciprTimer<=0f)
+        spawnRecipeTimer -= Time.deltaTime;
+        if(spawnRecipeTimer<=0f)
         {
-            spawnReciprTimer = spawnReciprTimerMax;
-            if(waitingRecipeSOList.Count < waitingRecipesMax)
+            spawnRecipeTimer = spawnReciprTimerMax;
+            if(KitchenGameManager.Instance.IsGamePlaying() && waitingRecipeSOList.Count < waitingRecipesMax)
             {
                 RecipeSO waitingRecipeSO = recipeListSO.recipeSOList[UnityEngine.Random.Range(0,recipeListSO.recipeSOList.Count)];
                 waitingRecipeSOList.Add(waitingRecipeSO);
@@ -74,7 +74,7 @@ public class DeliveryManager : MonoBehaviour
                     // Player delivery the correct recipe!
                     waitingRecipeSOList.RemoveAt(i);
                     successFullRecipeAmount++;
-                    OnSoundSuccess?.Invoke(this,EventArgs.Empty);
+                    OnRecipeSuccess?.Invoke(this,EventArgs.Empty);
                     OnRecipeCompleted?.Invoke(this,EventArgs.Empty);
                     return;
                 }
@@ -82,7 +82,7 @@ public class DeliveryManager : MonoBehaviour
         }
         // No mathes found!
         // Player did not delivery a correct Recipe
-        OnSoundFail?.Invoke(this,EventArgs.Empty);
+        OnRecipeFailed?.Invoke(this,EventArgs.Empty);
     }
 
     public List<RecipeSO> GetRecipeSOList()

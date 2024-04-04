@@ -1,7 +1,6 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class PlayerController : MonoBehaviour, IKitchenObjectParent
 {
@@ -18,6 +17,7 @@ public class PlayerController : MonoBehaviour, IKitchenObjectParent
     [SerializeField] private GameInput gameInput;
     [SerializeField] private LayerMask countersLayerMask;
     [SerializeField] private Transform kitchenObjectHoldPoint;
+    [SerializeField] private NavMeshAgent agent;
 
     private Vector3 moveDir;
     private Vector3 lastInteractDir;
@@ -35,6 +35,8 @@ public class PlayerController : MonoBehaviour, IKitchenObjectParent
     private void Start() {
         gameInput.OnInteractAction += GameInput_OnInteractAction;
         gameInput.OnInteractActionAlternate += GameInput_OnInteractAlternateAction;
+
+        agent.speed = moveSpeed;
     }
     private void GameInput_OnInteractAlternateAction(object sender,System.EventArgs e)
     {
@@ -58,6 +60,7 @@ public class PlayerController : MonoBehaviour, IKitchenObjectParent
     }
 
     private void Update() {
+        HandleMovementByMouse();
         HandleMovement();
         HandleInteractions();
     }
@@ -148,6 +151,19 @@ public class PlayerController : MonoBehaviour, IKitchenObjectParent
         isWalking = moveDir != Vector3.zero;
         transform.forward = Vector3.Slerp(transform.forward,moveDir,speedRotation*Time.deltaTime);
         // transform.forward = Vector3.Slerp(transform.forward,lastInteractDir,speedRotation*Time.deltaTime);
+    }
+
+    private void HandleMovementByMouse()
+    {
+        if(Input.GetMouseButtonDown(0))
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+            if (Physics.Raycast(ray, out hit, 100f))
+            {
+                agent.SetDestination(hit.point);
+            }
+        }
     }
 
     public bool IsWalking()

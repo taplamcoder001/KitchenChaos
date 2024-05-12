@@ -14,6 +14,13 @@ public class BaseCounter : MonoBehaviour,IKitchenObjectParent
     [SerializeField] private Transform counterTopPoint;
 
     private KitchenObject kitchenObject;
+    private Transform transformBaseCounter;
+    public Transform TransformBaseCounter => transformBaseCounter;
+
+    protected virtual void Awake()
+    {
+        transformBaseCounter = transform;
+    }
 
     public virtual void Interact(PlayerController player)
     {

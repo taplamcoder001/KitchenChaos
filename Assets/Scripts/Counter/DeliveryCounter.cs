@@ -5,9 +5,11 @@ using UnityEngine;
 public class DeliveryCounter : BaseCounter
 {
     public static DeliveryCounter Instance{get; private set;}
-    
-    private void Start() {
-        Instance = this;    
+
+    protected override void Awake()
+    {
+        base.Awake();
+        Instance = this;
     }
 
     public override void Interact(PlayerController player)

@@ -7,6 +7,7 @@ public abstract class StateMachine<EState> : MonoBehaviour where EState : Enum
     protected Dictionary<Enum, State<EState>> States = new Dictionary<Enum, State<EState>>();
     protected State<EState> CurrentState;
     protected bool IsTransitioningState = false;
+
     private void Start()
     {
         CurrentState.EnterState();
@@ -16,7 +17,8 @@ public abstract class StateMachine<EState> : MonoBehaviour where EState : Enum
     {
         EState nextStateKey = CurrentState.GetNextState();
 
-        if(!IsTransitioningState && nextStateKey.Equals(CurrentState.StateKey))
+        // Condition identify state
+        if (!IsTransitioningState && nextStateKey.Equals(CurrentState.StateKey))
         {
             CurrentState.UpdateState();
         }

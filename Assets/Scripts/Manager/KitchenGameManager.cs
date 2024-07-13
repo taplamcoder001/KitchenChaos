@@ -54,6 +54,7 @@ public class KitchenGameManager : MonoBehaviour
     private void Update() {
         switch (state){
             case State.WaitingToStart:
+                Time.timeScale = 1f;
                 break;
             case State.CountdownToStart:
                 countdownToStartTimer -=Time.deltaTime;

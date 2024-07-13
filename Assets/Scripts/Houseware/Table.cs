@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class Table : MonoBehaviour
 {
+    [SerializeField] private GameObject containFood;
     private bool hasDiners;
     public bool HasDisners => hasDiners;
     private Transform transformTable;
@@ -14,7 +14,8 @@ public class Table : MonoBehaviour
     public List<Chair> ListChair => listChair;
     private int slotNum; // Show slot estimate dinner
     public int SlotNum => slotNum;
-    // hasOrder, pos dish
+    private bool hasFood = false;
+    public bool HasFood => hasFood;
 
     private void Awake()
     {
@@ -24,7 +25,6 @@ public class Table : MonoBehaviour
 
     private void AddChairInList()
     {
-        // Can use Jobsystem  
         foreach (Transform chairTranform in containChair)
         {
             Chair chair = chairTranform.GetComponent<Chair>();
@@ -33,21 +33,21 @@ public class Table : MonoBehaviour
         slotNum = listChair.Count;
     }
 
-    private void Update()
-    {
-        if(hasDiners)
-        {
-            return;
-        }
-    }
-
-    public void HasDinner()
+    public void OnHasDinner()
     {
         hasDiners = true;
+    }
+
+    public void OnHasFood()
+    {
+        hasFood = true;
+        containFood.SetActive(hasFood);
     }
 
     public void ResetTable()
     {
         hasDiners = false;
+        hasFood = false;
+        containFood.SetActive(hasFood);
     }
 }

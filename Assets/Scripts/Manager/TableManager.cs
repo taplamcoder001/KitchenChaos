@@ -4,7 +4,7 @@ using UnityEngine;
 public class TableManager : Singleton<TableManager>
 {
     [SerializeField] private List<Table> tables = new List<Table>();
-
+    public List<Table> Tables => tables;
     private void Update()
     {
         /// Test
@@ -34,10 +34,5 @@ public class TableManager : Singleton<TableManager>
     public void AddTable(Table table)
     {
         tables.Add(table);
-    }
-
-    public void RemoveTable(Table removeObject)
-    {
-        tables.Remove(removeObject);
     }
 }

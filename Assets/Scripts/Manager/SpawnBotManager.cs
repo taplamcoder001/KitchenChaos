@@ -21,13 +21,12 @@ public class SpawnBotManager : Singleton<SpawnBotManager>
         if (currentTime >= timeSpawn) // And condition have slot
         {
             Table table = TableManager.Instance.GetTable();
-            if(table == null)   // When table off
+            if(table.HasDisners)   // When table off
             {
                 currentTime = 0;
                 return;
             }
 
-            TableManager.Instance.RemoveTable(table);
             for (int i = 0; i < RandomQuantityBot(); i++)
             {
                 GameObject bot = PoolingObject.Instance.GetBot();

@@ -6,26 +6,34 @@ public class BotSitting : BotState
     {
     }
 
+    private float timeEating = 10f;
+    private float currentTime;
+
     public override BotStateMachine.EBotState GetNextState()
     {
+        if(currentTime > timeEating)
+        {
+            return BotStateMachine.EBotState.OutRestaurant;
+        }
         return StateKey;
     }
 
     public override void EnterState()
     {
-        Debug.Log("Bot sitting");
-        // animation sitting
-        // Order dinner
+        currentTime = timeEating;
+        context.BotAnimation.GetPosForBody(context.CharacterMotion.PointMovement);
     }
 
     public override void ExitState()
     {
-        
+        context.BotAnimation.GetPosForBody(Vector3.zero);
     }
-
 
     public override void UpdateState()
     {
-        
+        if(context.BotInteract.TableScript.HasFood)
+        {
+            currentTime += Time.deltaTime;
+        }
     }
 }

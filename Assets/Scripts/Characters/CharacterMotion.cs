@@ -11,15 +11,16 @@ public class CharacterMotion : MonoBehaviour
     public Vector3 PointMovement => pointMovement;
     private Transform characterTransform;
     public Transform CharacterTransform => characterTransform;
+
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
         characterTransform = transform;
+        agent.speed = speed;
     }
 
     public void SetUpStats(Vector3 point)
     {
-        agent.speed = speed;
         pointMovement = point;
     }
 
@@ -31,5 +32,10 @@ public class CharacterMotion : MonoBehaviour
     public void AgentClear()
     {
         agent.ResetPath();
+    }
+
+    public bool OnHasPath()
+    {
+        return agent.hasPath;
     }
 }

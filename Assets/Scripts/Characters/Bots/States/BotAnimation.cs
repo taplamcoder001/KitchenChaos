@@ -1,18 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BotAnimation : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] private GameObject body;
 
-    // Update is called once per frame
-    void Update()
+    public void GetPosForBody(Vector3 pos)
     {
-        
+        body.transform.position = pos;
+    }
+    
+    public void DisActive()
+    {
+        gameObject.SetActive(false);
     }
 }

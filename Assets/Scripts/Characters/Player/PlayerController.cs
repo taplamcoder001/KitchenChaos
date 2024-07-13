@@ -154,9 +154,10 @@ public class PlayerController : Singleton<PlayerController>, IKitchenObjectParen
             transform.position += moveDir * moveDistance;
         }
 
-        isWalking = moveDir != Vector3.zero;
+        bool isWalkingByButton = moveDir != Vector3.zero;
 
-        if (isWalking)
+        isWalking = isWalkingByButton || motion.OnHasPath();
+        if (isWalkingByButton)
         {
             motion.AgentClear();
         }
@@ -186,7 +187,6 @@ public class PlayerController : Singleton<PlayerController>, IKitchenObjectParen
                 motion.Movement(hit.point);
                 Debug.Log(hit.transform.name);
             }
-
         }
     }
 

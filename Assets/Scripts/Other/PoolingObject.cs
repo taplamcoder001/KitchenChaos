@@ -21,6 +21,8 @@ public class PoolingObject : Singleton<PoolingObject>
         {
             int random = Random.Range(0, botPrefabs.Length);
             GameObject bot = Instantiate(botPrefabs[random],transform);
+            ChangeSkin change = bot.GetComponent<ChangeSkin>();
+            change.ChangeMarterial();
             bot.SetActive(false);
             queueBotObject.Enqueue(bot);
         }

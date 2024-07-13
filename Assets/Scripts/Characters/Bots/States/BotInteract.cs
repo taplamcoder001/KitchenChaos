@@ -8,14 +8,6 @@ public class BotInteract : MonoBehaviour
     public void SetTable(Table table)
     {
         tableScript = table;
-    }
-
-    private void Update()
-    {
-        if(tableScript != null)
-        {
-            // Order food
-            return;
-        }
+        table.OnHasDinner();
     }
 }

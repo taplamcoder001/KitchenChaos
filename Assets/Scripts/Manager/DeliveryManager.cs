@@ -74,6 +74,7 @@ public class DeliveryManager : MonoBehaviour
                     // Player delivery the correct recipe!
                     waitingRecipeSOList.RemoveAt(i);
                     successFullRecipeAmount++;
+                    AddFoodForTable();
                     OnRecipeSuccess?.Invoke(this,EventArgs.Empty);
                     OnRecipeCompleted?.Invoke(this,EventArgs.Empty);
                     return;
@@ -83,6 +84,18 @@ public class DeliveryManager : MonoBehaviour
         // No mathes found!
         // Player did not delivery a correct Recipe
         OnRecipeFailed?.Invoke(this,EventArgs.Empty);
+    }
+
+    private void AddFoodForTable()
+    {
+        foreach (Table table in TableManager.Instance.Tables)
+        {
+            if (table.HasDisners && !table.HasFood)
+            {
+                table.OnHasFood();
+                break;
+            }
+        }
     }
 
     public List<RecipeSO> GetRecipeSOList()
